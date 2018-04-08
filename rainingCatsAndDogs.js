@@ -1,5 +1,4 @@
-// constructor which can be used to create objects with the ".raining", ".noise",
-// and ".makenoise" properties
+// using inheritance
 function Animal(raining, noise) {
   this.raining = raining;
   this.noise = noise;
@@ -10,22 +9,39 @@ function Animal(raining, noise) {
   };
 }
 
-// sets the variables "dogs" and "cats" to be animal objects and initializes them with raining and noise properties
-var dogs = new Animal(true, "Woof!");
-var cats = new Animal(false, "Meow!");
+function Dog(raining) {
+  Animal.call(this, raining, "Woof!");
+}
+// inherit all methods from the Animal.prototype
+Dog.prototype = Object.create(Animal.prototype);
+// make the Dog constructor Dog() instead of Animal()
+Dog.prototype.constructor = Dog;
+
+function Cat(raining) {
+  Animal.call(this, raining, "Meow!"); 
+}
+// to inherit all methods from the Animal.prototype
+Cat.prototype = Object.create(Animal.prototype);
+// make the Cat constructor Cat() instead of Animal()
+Cat.prototype.constructor = Cat;
+
+var dog = new Dog(true);
+var cat = new Cat(false);
 
 // calling dogs and cats makeNoise methods
-dogs.makeNoise();
-cats.makeNoise();
+dog.makeNoise();
+cat.makeNoise();
 
 // if we want, we can change an objects properties after they're created
-cats.raining = true;
-cats.makeNoise();
+cat.raining = true;
+cat.makeNoise();
 
-var massHysteria = function(dogs, cats) {
-  if (dogs.raining === true && cats.raining === true) {
+var massHysteria = function(dog, cat) {
+  if (dog.raining === true && cat.raining === true) {
     console.log("DOGS AND CATS LIVING TOGETHER! MASS HYSTERIA!");
   }
 };
 
-massHysteria(dogs, cats);
+massHysteria(dog, cat);
+console.log(Dog.prototype);
+console.log(Animal.prototype);
